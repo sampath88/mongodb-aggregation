@@ -1,4 +1,4 @@
-const { getActiveUsers, getTotalActiveUsers, avgAgeOfUsers, topFiveFavouriteFruits, genderCount, highestRegisteredUsersByCountry, getEyeColors, avgNumberOfTags, usersWithEnimTag, userWithOneOfTheTag, userWithATagAndInactive, phoneStartingWith, recentlyRegistered, categorizeByFruit } = require("../controllers/user.controller");
+const { getActiveUsers, getTotalActiveUsers, avgAgeOfUsers, topFiveFavouriteFruits, genderCount, highestRegisteredUsersByCountry, getEyeColors, avgNumberOfTags, usersWithEnimTag, userWithOneOfTheTag, userWithATagAndInactive, phoneStartingWith, recentlyRegistered, categorizeByFruit, adAsSecondTag, enimAndIdAsTag, companyAndUserCount } = require("../controllers/user.controller");
 
 const router = require("express").Router();
 
@@ -16,5 +16,8 @@ router.route("/user/userWithATagAndInactive").get(userWithATagAndInactive);
 router.route("/user/phoneStartingWith").get(phoneStartingWith);
 router.route("/user/recentlyRegistered").get(recentlyRegistered);
 router.route("/user/categorizeByFruit").get(categorizeByFruit);
+router.route("/user/adAsSecondTag").get(adAsSecondTag);
+router.route("/user/enimAndIdAsTag").get(enimAndIdAsTag);
+router.route("/user/companyAndUserCount").get(companyAndUserCount);
 
 module.exports = router;

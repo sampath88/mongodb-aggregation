@@ -90,8 +90,12 @@ exports.genderCount = async (req, res) => {
       {
         $group: {
           _id: "$gender",
+          // genderCount: {
+          //   $sum: 1,
+          // },
+          //* Another way */
           genderCount: {
-            $sum: 1,
+            $count: {},
           },
         },
       },
@@ -333,6 +337,68 @@ exports.categorizeByFruit = async (req, res) => {
     ]);
 
     res.status(200).send(categorizeByFruit);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+exports.adAsSecondTag = async (req, res) => {
+  try {
+    const adAsSecondTag = await User.aggregate([
+      {
+        $match: {
+          "tags.1": "ad",
+        },
+      },
+      {
+        $count: "usersWithAdAsSecondTag",
+      },
+    ]);
+    res.status(200).send(adAsSecondTag);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+exports.enimAndIdAsTag = async (req, res) => {
+  try {
+    const enimAndIdAsTag = await User.aggregate([
+      {
+        $match: {
+          tags: { $all: ["enim", "id"] },
+        },
+      },
+      {
+        $count: "usersWithEnimAndIdTags",
+      },
+    ]);
+    res.status(200).send(enimAndIdAsTag);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+exports.companyAndUserCount = async (req, res) => {
+  try {
+    const companyAndUserCount = await User.aggregate([
+      {
+        $match: {
+          "company.location.country": "USA",
+        },
+      },
+      {
+        $group: {
+          _id: "$company.title",
+          usersCount: {
+            $sum: 1,
+          },
+          users: {
+            $push: { name: "$name", age: "$age", id: "$_id" },
+          },
+        },
+      },
+    ]);
+    res.status(200).send(companyAndUserCount);
   } catch (error) {
     res.status(400).send(error);
   }

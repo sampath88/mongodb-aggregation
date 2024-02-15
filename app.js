@@ -9,7 +9,9 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 const users = require("./routes/user.route");
+const books = require("./routes/book.router");
 
 app.use("/api/v1", users);
+app.use("/api/v1", books);
 
 module.exports = app;
